@@ -15,9 +15,20 @@
     <!--Register Fragment-->
     <string name="english_word">English Word</string>
     <string name="japanese_word">Japanese Word</string>
+    <string name="level">Level</string>
+    <string name="tense">Tense</string>
+    <string name="category">Category</string>
     <string name="register">Register</string>
     <string name="not_entered">is not entered.</string>
     <string name="infelicity">is infelicity.</string>
+
+    <string name="none">None</string>
+    <string name="jhs_1">JHS Grade 7</string>
+    <string name="jhs_2">JHS Grade 8</string>
+    <string name="jhs_3">JHS Grade 9</string>
+    <string name="hs_1">HS Grade 10</string>
+    <string name="hs_2">HS Grade 11</string>
+    <string name="hs_3">HS Grade 12</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

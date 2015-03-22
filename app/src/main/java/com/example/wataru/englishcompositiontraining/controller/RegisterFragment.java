@@ -7,8 +7,10 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.wataru.englishcompositiontraining.R;
@@ -61,9 +63,27 @@ public class RegisterFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
         view = inflater.inflate(R.layout.fragment_register, container, false);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.add(getString(R.string.none));
+        adapter.add(getString(R.string.jhs_1));
+        adapter.add(getString(R.string.jhs_2));
+        adapter.add(getString(R.string.jhs_3));
+        adapter.add(getString(R.string.hs_1));
+        adapter.add(getString(R.string.hs_2));
+        adapter.add(getString(R.string.hs_3));
+
+        Spinner sp_level = (Spinner)view.findViewById(R.id.sp_level);
+        sp_level.setAdapter(adapter);
+//        sp_level.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//            }
+//        });
         Button btn_register = (Button)view.findViewById(R.id.register);
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +95,7 @@ public class RegisterFragment extends Fragment {
     }
 
     private void onRegister() {
+
         EditText et_en_word = (EditText)view.findViewById(R.id.et_en_word);
         EditText et_ja_word = (EditText)view.findViewById(R.id.et_ja_word);
         final String UNSAFE_EN_WORD = et_en_word.getText().toString();
@@ -93,10 +114,14 @@ public class RegisterFragment extends Fragment {
             return;
         }
         final String TRUSTED_JA_WORD = UNSAFE_JA_WORD;
+        Spinner sp_level = (Spinner)view.findViewById(R.id.sp_level);
+        final int TRUSTED_LEVEL = sp_level.getSelectedItemPosition();
         QuizDao dao = new QuizDao(getActivity());
         SentenceDto dto = new SentenceDto();
         dto.setEnWord(TRUSTED_EN_WORD);
         dto.setJaWord(TRUSTED_JA_WORD);
+        dto.setLevel(TRUSTED_LEVEL);
+//        TODO: TenseとCategoryを追加する
         dao.insert(dto);
         Toast.makeText(getActivity(), getString(R.string.not_entered), Toast.LENGTH_SHORT).show();
 
