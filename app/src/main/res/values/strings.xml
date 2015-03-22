@@ -12,6 +12,13 @@
 
     <string name="action_settings">Settings</string>
 
+    <!--Register Fragment-->
+    <string name="english_word">English Word</string>
+    <string name="japanese_word">Japanese Word</string>
+    <string name="register">Register</string>
+    <string name="not_entered">is not entered.</string>
+    <string name="infelicity">is infelicity.</string>
+
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

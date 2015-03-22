@@ -7,8 +7,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.wataru.englishcompositiontraining.R;
+import com.example.wataru.englishcompositiontraining.dao.QuizDao;
+import com.example.wataru.englishcompositiontraining.model.SentenceDto;
+
+import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -20,6 +27,7 @@ import com.example.wataru.englishcompositiontraining.R;
  * create an instance of this fragment.
  */
 public class RegisterFragment extends Fragment {
+    View view;
     private static final String ARG_SECTION_NUMBER = "section_number";
 
 
@@ -47,15 +55,52 @@ public class RegisterFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_register, container, false);
+
+        view = inflater.inflate(R.layout.fragment_register, container, false);
+        Button btn_register = (Button)view.findViewById(R.id.register);
+        btn_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View buttonView) {
+                onRegister();
+            }
+        });
+        return view;
     }
 
+    private void onRegister() {
+        EditText et_en_word = (EditText)view.findViewById(R.id.et_en_word);
+        EditText et_ja_word = (EditText)view.findViewById(R.id.et_ja_word);
+        final String UNSAFE_EN_WORD = et_en_word.getText().toString();
+        final String UNSAFE_JA_WORD = et_ja_word.getText().toString();
+        if (StringUtils.isEmpty(UNSAFE_EN_WORD.trim())) {
+            Toast.makeText(getActivity(), getString(R.string.english_word) + " " + getString(R.string.not_entered), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (!UNSAFE_EN_WORD.matches("[a-zA-Z]")) {
+            Toast.makeText(getActivity(), getString(R.string.english_word) + " " + getString(R.string.infelicity), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        final String TRUSTED_EN_WORD = UNSAFE_EN_WORD;
+        if (StringUtils.isEmpty(UNSAFE_JA_WORD.trim())) {
+            Toast.makeText(getActivity(), getString(R.string.japanese_word) + " " + getString(R.string.not_entered), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        final String TRUSTED_JA_WORD = UNSAFE_JA_WORD;
+        QuizDao dao = new QuizDao(getActivity());
+        SentenceDto dto = new SentenceDto();
+        dto.setEnWord(TRUSTED_EN_WORD);
+        dto.setJaWord(TRUSTED_JA_WORD);
+        dao.insert(dto);
+        Toast.makeText(getActivity(), getString(R.string.not_entered), Toast.LENGTH_SHORT).show();
+
+    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
