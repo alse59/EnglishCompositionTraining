@@ -1,25 +1,25 @@
 package com.example.wataru.englishcompositiontraining.controller;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.wataru.englishcompositiontraining.R;
 import com.example.wataru.englishcompositiontraining.common.CommonConstants;
 
 
 public class MainActivity extends ActionBarActivity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, RegisterFragment.FragmentCallbacks {
 
+    @Override
+    public void onHogehoge() {
+
+    }
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -50,14 +50,19 @@ public class MainActivity extends ActionBarActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         switch (position) {
+            case -1:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, TopFragment.newInstance(position + 1))
+                        .commit();
+                break;
             case 0:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, QuizFragment.newInstance(position + 1, CommonConstants.READING))
+                        .replace(R.id.container, QuizFormFragment.newInstance(position + 1))
                         .commit();
                 break;
             case 1:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, QuizFragment.newInstance(position + 1, CommonConstants.SPEAKING))
+                        .replace(R.id.container, RegisterFragment.newInstance(position + 1))
                         .commit();
                 break;
             case 2:
@@ -65,11 +70,33 @@ public class MainActivity extends ActionBarActivity
                         .replace(R.id.container, RegisterFragment.newInstance(position + 1))
                         .commit();
                 break;
+
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+    }
+
+
+
+    public void transitionQuizFragment(int quizForm) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
     }
 
     public void onSectionAttached(int number) {
         switch (number) {
+            case 0:
+                mTitle = getString(R.string.title_section0);
+                break;
             case 1:
                 mTitle = getString(R.string.title_section1);
                 break;
@@ -87,6 +114,18 @@ public class MainActivity extends ActionBarActivity
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
+    }
+
+    public void move() {
+        Intent intent = new Intent(this, QuizFragment.class);
+
+    }
+
+    public void reading() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, QuizFragment.newInstance(2, CommonConstants.READING))
+                .commit();
     }
 
 
@@ -116,46 +155,6 @@ public class MainActivity extends ActionBarActivity
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
-
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            ((MainActivity) activity).onSectionAttached(
-                    getArguments().getInt(ARG_SECTION_NUMBER));
-        }
     }
 
 }

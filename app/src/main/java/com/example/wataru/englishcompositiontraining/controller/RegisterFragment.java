@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -29,7 +28,11 @@ import org.apache.commons.lang.StringUtils;
  * create an instance of this fragment.
  */
 public class RegisterFragment extends Fragment {
-    View view;
+    private Spinner spLevel;
+    private EditText etEnWord;
+    private EditText etJaWord;
+
+
     private static final String ARG_SECTION_NUMBER = "section_number";
 
 
@@ -64,42 +67,31 @@ public class RegisterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.fragment_register, container, false);
+        View view = inflater.inflate(R.layout.fragment_register, container, false);
 
+        etEnWord = (EditText)view.findViewById(R.id.et_en_word);
+        etJaWord = (EditText) view.findViewById(R.id.et_ja_word);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapter.add(getString(R.string.none));
-        adapter.add(getString(R.string.jhs_1));
-        adapter.add(getString(R.string.jhs_2));
-        adapter.add(getString(R.string.jhs_3));
-        adapter.add(getString(R.string.hs_1));
-        adapter.add(getString(R.string.hs_2));
-        adapter.add(getString(R.string.hs_3));
+        adapter.addAll(getResources().getStringArray(R.array.sp_levels));
 
-        Spinner sp_level = (Spinner)view.findViewById(R.id.sp_level);
-        sp_level.setAdapter(adapter);
-//        sp_level.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//            }
-//        });
-        Button btn_register = (Button)view.findViewById(R.id.register);
-        btn_register.setOnClickListener(new View.OnClickListener() {
+        spLevel = (Spinner) view.findViewById(R.id.sp_level);
+        spLevel.setAdapter(adapter);
+
+        view.findViewById(R.id.register).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View buttonView) {
-                onRegister();
+                onClickRegister();
             }
-        });
+        });;
+
         return view;
     }
 
-    private void onRegister() {
+    private void onClickRegister() {
 
-        EditText et_en_word = (EditText)view.findViewById(R.id.et_en_word);
-        EditText et_ja_word = (EditText)view.findViewById(R.id.et_ja_word);
-        final String UNSAFE_EN_WORD = et_en_word.getText().toString();
-        final String UNSAFE_JA_WORD = et_ja_word.getText().toString();
+        final String UNSAFE_EN_WORD = etEnWord.getText().toString();
+        final String UNSAFE_JA_WORD = etJaWord.getText().toString();
         if (StringUtils.isEmpty(UNSAFE_EN_WORD.trim())) {
             Toast.makeText(getActivity(), getString(R.string.english_word) + " " + getString(R.string.not_entered), Toast.LENGTH_SHORT).show();
             return;
@@ -114,8 +106,7 @@ public class RegisterFragment extends Fragment {
             return;
         }
         final String TRUSTED_JA_WORD = UNSAFE_JA_WORD;
-        Spinner sp_level = (Spinner)view.findViewById(R.id.sp_level);
-        final int TRUSTED_LEVEL = sp_level.getSelectedItemPosition();
+        final int TRUSTED_LEVEL = spLevel.getSelectedItemPosition();
         QuizDao dao = new QuizDao(getActivity());
         SentenceDto dto = new SentenceDto();
         dto.setEnWord(TRUSTED_EN_WORD);
@@ -136,7 +127,7 @@ public class RegisterFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ((MainActivity) activity).onSectionAttached( getArguments().getInt(ARG_SECTION_NUMBER));
+        ((MainActivity) activity).onSectionAttached(getArguments().getInt(ARG_SECTION_NUMBER));
     }
 
     @Override
@@ -144,6 +135,12 @@ public class RegisterFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+    public static interface FragmentCallbacks {
+        public void onHogehoge();
+    }
+
+
 
     /**
      * This interface must be implemented by activities that contain this

@@ -51,6 +51,7 @@ public class QuizFragment extends Fragment {
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         args.putInt(ARG_QUIZ_FORM, quizForm);
+        args.putString("text", "これだけは伝え");
         fragment.setArguments(args);
         return fragment;
     }
@@ -74,8 +75,10 @@ public class QuizFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         View v = inflater.inflate(R.layout.fragment_quiz, container, false);
         textView = (TextView)v.findViewById(R.id.textView);
+        quizButton = (Button)v.findViewById(R.id.quiz_button);
         QuizDao dao = new QuizDao(getActivity());
         //問題を取得して存在するか確認する
         List<SentenceDto>unSafeList = dao.searchQuiz(null);
@@ -96,7 +99,7 @@ public class QuizFragment extends Fragment {
         }
 
 
-        quizButton = (Button)v.findViewById(R.id.quiz_button);
+
         quizButton.setOnClickListener( new View.OnClickListener() {
             private static final String ANSWER_BUTTON = "Answer";
             private static final String NEXT_BUTTON = "Next";

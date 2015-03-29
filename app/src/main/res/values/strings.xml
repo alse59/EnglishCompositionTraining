@@ -1,14 +1,15 @@
 <resources>
     <string name="app_name">EnglishCompositionTraining</string>
+    <string name="title_section0">Top</string>
+    <string name="title_section1">Quiz</string>
+    <string name="title_section2">Register</string>
+    <string name="title_section3">Modify</string>
 
-    <string name="title_section1">Reading</string>
-    <string name="title_section2">Writing</string>
-    <string name="title_section3">Register</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_example">Example action</string>
+    <string name="action_example">Example Action</string>
 
     <string name="action_settings">Settings</string>
 
@@ -22,13 +23,28 @@
     <string name="not_entered">is not entered.</string>
     <string name="infelicity">is infelicity.</string>
 
-    <string name="none">None</string>
-    <string name="jhs_1">JHS Grade 7</string>
-    <string name="jhs_2">JHS Grade 8</string>
-    <string name="jhs_3">JHS Grade 9</string>
-    <string name="hs_1">HS Grade 10</string>
-    <string name="hs_2">HS Grade 11</string>
-    <string name="hs_3">HS Grade 12</string>
+    <string-array name="sp_levels">
+        <item>None</item>
+        <item>JHS Grade 7</item>
+        <item>JHS Grade 8</item>
+        <item>JHS Grade 9</item>
+        <item>HS Grade 10</item>
+        <item>HS Grade 11</item>
+        <item>HS Grade 12</item>
+    </string-array>
+
+    <!--QuizFormFragment-->
+    <string-array name="sp_translations">
+        <item>japanese</item>
+        <item>english</item>
+    </string-array>
+
+    <string-array name="sp_read_write_tys">
+        <item>reading</item>
+        <item>writing</item>
+    </string-array>
+
+
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

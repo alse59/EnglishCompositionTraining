@@ -18,8 +18,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/english_word"
-                android:id="@+id/tv_en_word" />
+                android:text="@string/english_word" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -35,8 +34,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/japanese_word"
-                android:id="@+id/tv_ja_word" />
+                android:text="@string/japanese_word" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -54,8 +52,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/level"
-                android:id="@+id/tv_level" />
+                android:text="@string/level" />
 
             <Spinner
                 android:layout_width="match_parent"
@@ -74,8 +71,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tense"
-                android:id="@+id/tv_tense" />
+                android:text="@string/tense" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -93,8 +89,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/category"
-                android:id="@+id/tv_category" />
+                android:text="@string/category" />
 
             <EditText
                 android:layout_width="match_parent"
